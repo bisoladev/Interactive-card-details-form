@@ -7,16 +7,26 @@ function App() {
         alt="Gradient banner"
         className="h-1/3 w-full md:h-full md:w-2/5"
       />
-      <div className="absolute left-[5%] top-[16%] z-10 h-[245px] w-[300px] bg-[url('/front-card.png')] bg-contain bg-no-repeat md:left-[6%] md:top-[20%] lg:left-[8%] lg:w-[442px]">
-        <p className="absolute">HELLLLLOOOO</p>
+      <div className="absolute left-[5%] top-[19%] z-10 h-[245px] w-[300px] bg-[url('/front-card.png')] bg-contain bg-no-repeat md:left-[6%] md:top-[20%] lg:left-[8%] lg:w-[442px]">
+        <p className="absolute bottom-[55%] left-[5%] text-xl tracking-widest text-white lg:bottom-[26%] lg:text-3xl">
+          0000 0000 0000 0000
+        </p>
+        <p className="absolute bottom-[40%] left-[5%] text-sm text-white lg:bottom-[10%]">
+          JANE APPLESEED
+        </p>
+        <p className="absolute bottom-[40%] right-[8%] text-sm text-white lg:bottom-[10%] ">
+          00/00
+        </p>
       </div>
       <div className="absolute  left-[15%] top-[4%] h-[245px] w-[300px] bg-[url('/back-card.png')] bg-contain bg-no-repeat max-[352px]:left-[3%] md:left-[6%] md:top-[50%] lg:left-[12%] lg:w-[442px]">
-        <p className="absolute">HELLLLLOOOO</p>
+        <p className="absolute right-[15%] top-[28%] text-white lg:top-[44%]">
+          000
+        </p>
       </div>
       <div className="flex w-full justify-center align-middle">
-        <form
+        {/* <form
           action="#"
-          className="mb-14 mt-20 flex w-11/12 flex-col justify-center align-middle md:w-9/12 lg:mb-0 lg:mt-0 lg:w-[47%]"
+          className="mb-14 mt-24 flex w-11/12 flex-col justify-center align-middle md:w-9/12 lg:mb-0 lg:mt-0 lg:w-[47%]"
         >
           <div className="">
             <div>
@@ -34,7 +44,7 @@ function App() {
               <label htmlFor="number" className="label">
                 Card Number
                 <input
-                  type="text"
+                  type="number"
                   id="number"
                   placeholder="e.g. 1234 5678 9123 0000"
                   className="form-control block w-full"
@@ -47,13 +57,13 @@ function App() {
                   Exp. Date (MM/YY)
                   <div className="flex gap-3">
                     <input
-                      type="text"
+                      type="number"
                       id="month"
                       placeholder="MM"
                       className="form-control w-1/2"
                     />
                     <input
-                      type="text"
+                      type="number"
                       id="name"
                       placeholder="YY"
                       className="form-control w-1/2"
@@ -65,7 +75,7 @@ function App() {
                 <label htmlFor="cvc" className="label">
                   cvc
                   <input
-                    type="text"
+                    type="number"
                     id="cvc"
                     placeholder="e.g. 123"
                     className="form-control block w-full"
@@ -82,7 +92,8 @@ function App() {
               </button>
             </div>
           </div>
-        </form>
+        </form> */}
+        <div></div>
       </div>
     </div>
     // </div>

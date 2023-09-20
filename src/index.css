@@ -10,7 +10,7 @@ body {
 @tailwind utilities;
 @layer components {
   .form-control {
-    @apply mb-[18px] mt-2 rounded-lg border  border-grey pb-3 pl-4 pt-4;
+    @apply mb-[18px] mt-2 rounded-lg border  border-grey pb-3 pl-4 pr-4 pt-4;
   }
   .form-control::placeholder {
     @apply text-lg text-deepGrey;
