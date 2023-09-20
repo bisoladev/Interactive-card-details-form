@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&display=swap');
 body {
   margin: 0;
   padding: 0;
@@ -10,13 +10,13 @@ body {
 @tailwind utilities;
 @layer components {
   .form-control {
-    @apply border border-grey rounded-lg pt-4  pb-3 pl-4 mb-[18px] mt-2;
+    @apply mb-[18px] mt-2 rounded-lg border  border-grey pb-3 pl-4 pt-4;
   }
   .form-control::placeholder {
-    @apply text-deepGrey text-lg;
+    @apply text-lg text-deepGrey;
   }
 
   .label {
-    @apply text-xs md:text-sm tracking-[.125em] text-violet uppercase;
+    @apply text-xs uppercase tracking-[.125em] text-violet md:text-sm;
   }
 }
