@@ -6,7 +6,7 @@ export default {
       colors: {
         grey: '#DFDEE0',
         violet: '#21092F',
-        deepGrey: '#C8C2CB',
+        deepGrey: '#8F8694',
       },
     },
   },
