@@ -1,8 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react';
-import { z } from 'zod';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 function App() {
   const [confirmed, setConfirmed] = useState(false);
@@ -12,30 +10,21 @@ function App() {
   const [year, setYear] = useState('');
   const [cvc, setCvc] = useState('');
 
-  // type FormData = {
-  //   cardName: string;
-  //   cardNumber: number;
-  //   expiryMonth: number;
-  //   expiryYear: number;
-  //   cvc: number;
-  // };
-
-  const schema = z.object({
-    cardName: z.string().min(2).max(26),
-    cardNumber: z.number(),
-    expiryMonth: z.number(),
-    expiryYear: z.number(),
-    cvc: z.number(),
-  });
-
-  type FormData = z.infer<typeof schema>;
+  type FormData = {
+    cardName: string;
+    cardNumber: number;
+    expiryMonth: number;
+    expiryYear: number;
+    cvc: number;
+  };
 
   const {
     register,
-    handleSubmit,
     formState: { errors },
+    handleSubmit,
+    reset,
   } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    criteriaMode: 'all',
   });
 
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,6 +42,12 @@ function App() {
 
   const submitForm = () => {
     setConfirmed(true);
+    setName('');
+    setNumber('');
+    setMonth('');
+    setYear('');
+    setCvc('');
+    reset();
   };
 
   return (
@@ -119,6 +114,7 @@ function App() {
                     }`}
                     maxLength={26}
                     {...register('cardName', {
+                      required: 'This is required.',
                       onChange: (e) => {
                         setName(e.target.value);
                       },
@@ -139,12 +135,19 @@ function App() {
                     className={`form-control block w-full ${
                       errors.cardNumber ? 'border-red-500' : ''
                     }`}
-                    // onChange={handleCardNumberChange}
                     value={number}
                     maxLength={19}
-                    minLength={2}
                     {...register('cardNumber', {
-                      valueAsNumber: true,
+                      required: 'This is required.',
+                      pattern: {
+                        value: /^[\d\s]+$/,
+                        message: 'This input is number only.',
+                      },
+                      minLength: {
+                        value: 19,
+                        message: 'Incomplete digits.',
+                      },
+                      // valueAsNumber: true,
                       onChange: handleCardNumberChange,
                     })}
                   />
@@ -160,15 +163,20 @@ function App() {
                     <div className="flex gap-3">
                       <div>
                         <input
-                          type="number"
+                          type="text"
                           id="month"
                           placeholder="MM"
-                          className={`form-control w-1/2 ${
+                          className={`form-control w-full ${
                             errors.expiryMonth ? 'border-red-500' : ''
                           }`}
-                          // onChange={(e) => setMonth(e.target.value)}
+                          maxLength={2}
                           {...register('expiryMonth', {
-                            valueAsNumber: true,
+                            // valueAsNumber: true,
+                            required: 'Cant be blank.',
+                            pattern: {
+                              value: /^(0[1-9]|1[0-2])$/,
+                              message: 'Enter a valid month (01-12).',
+                            },
                             onChange: (e) => {
                               setMonth(e.target.value);
                             },
@@ -182,15 +190,20 @@ function App() {
                       </div>
                       <div>
                         <input
-                          type="number"
+                          type="text"
                           id="name"
                           placeholder="YY"
-                          className={`form-control w-1/2 ${
+                          maxLength={2}
+                          className={`form-control w-full ${
                             errors.expiryYear ? 'border-red-500' : ''
                           }`}
-                          // onChange={(e) => setYear(e.target.value);
                           {...register('expiryYear', {
-                            valueAsNumber: true,
+                            // valueAsNumber: true,
+                            required: 'Cant be blank.',
+                            pattern: {
+                              value: /^(1[0-9]|30)$/,
+                              message: 'Enter a valid year.',
+                            },
                             onChange: (e) => {
                               setYear(e.target.value);
                             },
@@ -209,15 +222,20 @@ function App() {
                   <label htmlFor="cvc" className="label">
                     cvc
                     <input
-                      type="number"
+                      type="text"
                       id="cvc"
                       placeholder="e.g. 123"
+                      maxLength={3}
                       className={`form-control block w-full ${
-                        errors.expiryYear ? 'border-red-500' : ''
+                        errors.cvc ? 'border-red-500' : ''
                       }`}
-                      // onChange={(e) => setCvc(e.target.value)}
                       {...register('cvc', {
-                        valueAsNumber: true,
+                        // valueAsNumber: true,
+                        required: 'Cant be blank.',
+                        minLength: {
+                          value: 3,
+                          message: 'Invalid cvc.',
+                        },
                         onChange: (e) => {
                           setCvc(e.target.value);
                         },
@@ -233,7 +251,6 @@ function App() {
                 <button
                   type="submit"
                   className="w-full rounded-lg bg-violet py-3 text-lg text-white"
-                  // onClick={() => setConfirmed(true)}
                 >
                   Confirm
                 </button>
