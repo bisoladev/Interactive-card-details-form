@@ -1,4 +1,8 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 function App() {
   const [confirmed, setConfirmed] = useState(false);
@@ -7,6 +11,32 @@ function App() {
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
   const [cvc, setCvc] = useState('');
+
+  // type FormData = {
+  //   cardName: string;
+  //   cardNumber: number;
+  //   expiryMonth: number;
+  //   expiryYear: number;
+  //   cvc: number;
+  // };
+
+  const schema = z.object({
+    cardName: z.string().min(2).max(26),
+    cardNumber: z.number(),
+    expiryMonth: z.number(),
+    expiryYear: z.number(),
+    cvc: z.number(),
+  });
+
+  type FormData = z.infer<typeof schema>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
 
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Remove spaces and store only the numbers
@@ -21,6 +51,10 @@ function App() {
     setNumber(formattedValue);
   };
 
+  const submitForm = () => {
+    setConfirmed(true);
+  };
+
   return (
     // <div className="">
     <div className="relative flex h-screen flex-col md:flex-row">
@@ -33,10 +67,10 @@ function App() {
         <p className="absolute bottom-[55%] left-[5%] text-xl tracking-widest text-white lg:bottom-[26%] lg:text-3xl">
           {number.length > 0 ? number : '0000 0000 0000 0000'}
         </p>
-        <p className="absolute bottom-[40%] left-[5%] text-sm text-white lg:bottom-[10%]">
+        <p className="absolute bottom-[40%] left-[5%] text-[10px] uppercase text-white lg:bottom-[10%] lg:text-sm">
           {name.length > 0 ? name : 'JANE APPLESEED'}
         </p>
-        <p className="absolute bottom-[40%] right-[8%] text-sm text-white lg:bottom-[10%] ">
+        <p className="absolute bottom-[40%] right-[8%] text-[10px]  text-white lg:bottom-[10%] lg:text-sm ">
           {month.length > 0 ? month : '00'}/{year.length > 0 ? year : '00'}
         </p>
       </div>
@@ -68,6 +102,7 @@ function App() {
           </div>
         ) : (
           <form
+            onSubmit={handleSubmit(submitForm)}
             action="#"
             className="mb-14 mt-24 flex w-11/12 flex-col justify-center align-middle md:w-9/12 lg:mb-0 lg:mt-0 lg:w-[47%]"
           >
@@ -79,11 +114,19 @@ function App() {
                     type="text"
                     id="name"
                     placeholder="e.g. Jane Appleseed"
-                    className="form-control block w-full"
-                    name="card_name"
-                    onChange={(e) => setName(e.target.value)}
-                    maxLength={25}
+                    className={`form-control block w-full ${
+                      errors.cardName ? 'border-red-500' : ''
+                    }`}
+                    maxLength={26}
+                    {...register('cardName', {
+                      onChange: (e) => {
+                        setName(e.target.value);
+                      },
+                    })}
                   />
+                  {errors.cardName && (
+                    <p className="error-msg">{errors.cardName.message}</p>
+                  )}
                 </label>
               </div>
               <div>
@@ -93,12 +136,21 @@ function App() {
                     type="text"
                     id="number"
                     placeholder="e.g. 1234 5678 9123 0000"
-                    className="form-control block w-full"
-                    name="card_number"
-                    onChange={handleCardNumberChange}
+                    className={`form-control block w-full ${
+                      errors.cardNumber ? 'border-red-500' : ''
+                    }`}
+                    // onChange={handleCardNumberChange}
                     value={number}
                     maxLength={19}
+                    minLength={2}
+                    {...register('cardNumber', {
+                      valueAsNumber: true,
+                      onChange: handleCardNumberChange,
+                    })}
                   />
+                  {errors.cardNumber && (
+                    <p className="error-msg">{errors.cardNumber.message}</p>
+                  )}
                 </label>
               </div>
               <div className="grid grid-cols-2 justify-between gap-6 pb-4">
@@ -106,24 +158,50 @@ function App() {
                   <label htmlFor="month" className="label whitespace-nowrap">
                     Exp. Date (MM/YY)
                     <div className="flex gap-3">
-                      <input
-                        type="text"
-                        id="month"
-                        placeholder="MM"
-                        className="form-control w-1/2"
-                        name="expiry_month"
-                        onChange={(e) => setMonth(e.target.value)}
-                        maxLength={2}
-                      />
-                      <input
-                        type="text"
-                        id="name"
-                        placeholder="YY"
-                        className="form-control w-1/2"
-                        name="expiry_year"
-                        onChange={(e) => setYear(e.target.value)}
-                        maxLength={2}
-                      />
+                      <div>
+                        <input
+                          type="number"
+                          id="month"
+                          placeholder="MM"
+                          className={`form-control w-1/2 ${
+                            errors.expiryMonth ? 'border-red-500' : ''
+                          }`}
+                          // onChange={(e) => setMonth(e.target.value)}
+                          {...register('expiryMonth', {
+                            valueAsNumber: true,
+                            onChange: (e) => {
+                              setMonth(e.target.value);
+                            },
+                          })}
+                        />
+                        {errors.expiryMonth && (
+                          <p className="error-msg">
+                            {errors.expiryMonth.message}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <input
+                          type="number"
+                          id="name"
+                          placeholder="YY"
+                          className={`form-control w-1/2 ${
+                            errors.expiryYear ? 'border-red-500' : ''
+                          }`}
+                          // onChange={(e) => setYear(e.target.value);
+                          {...register('expiryYear', {
+                            valueAsNumber: true,
+                            onChange: (e) => {
+                              setYear(e.target.value);
+                            },
+                          })}
+                        />
+                        {errors.expiryYear && (
+                          <p className="error-msg">
+                            {errors.expiryYear.message}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </label>
                 </div>
@@ -131,14 +209,23 @@ function App() {
                   <label htmlFor="cvc" className="label">
                     cvc
                     <input
-                      type="text"
+                      type="number"
                       id="cvc"
                       placeholder="e.g. 123"
-                      className="form-control block w-full"
-                      name="cvc"
-                      onChange={(e) => setCvc(e.target.value)}
-                      maxLength={3}
+                      className={`form-control block w-full ${
+                        errors.expiryYear ? 'border-red-500' : ''
+                      }`}
+                      // onChange={(e) => setCvc(e.target.value)}
+                      {...register('cvc', {
+                        valueAsNumber: true,
+                        onChange: (e) => {
+                          setCvc(e.target.value);
+                        },
+                      })}
                     />
+                    {errors.cvc && (
+                      <p className="error-msg">{errors.cvc.message}</p>
+                    )}
                   </label>
                 </div>
               </div>
@@ -146,7 +233,7 @@ function App() {
                 <button
                   type="submit"
                   className="w-full rounded-lg bg-violet py-3 text-lg text-white"
-                  onClick={() => setConfirmed(true)}
+                  // onClick={() => setConfirmed(true)}
                 >
                   Confirm
                 </button>

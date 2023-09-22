@@ -10,13 +10,17 @@ body {
 @tailwind utilities;
 @layer components {
   .form-control {
-    @apply mb-[18px] mt-2 rounded-lg border  border-grey pb-3 pl-4 pr-4 pt-4;
+    @apply mb-[8px] mt-2 rounded-lg border  border-grey pb-3 pl-4 pr-4 pt-4;
   }
   .form-control::placeholder {
-    @apply text-lg text-deepGrey;
+    @apply text-base text-deepGrey md:text-lg;
   }
 
   .label {
     @apply text-xs uppercase tracking-[.125em] text-violet md:text-sm;
+  }
+
+  .error-msg {
+    @apply mb-[18px] whitespace-normal pt-0 text-xs capitalize tracking-normal text-red-500;
   }
 }
