@@ -10,7 +10,7 @@ body {
 @tailwind utilities;
 @layer components {
   .form-control {
-    @apply focus:gradient mb-[8px] mt-2 rounded-lg  border border-grey pb-3 pl-4 pr-4 pt-4 transition-all focus:outline-none;
+    @apply focus:gradient mb-[8px] mt-2 rounded-lg  border border-grey pb-3 pl-4 pr-4 pt-4 focus:outline-none;
   }
   .form-control::placeholder {
     @apply text-base text-deepGrey md:text-lg;
