@@ -191,7 +191,7 @@ function App() {
                       <div>
                         <input
                           type="text"
-                          id="name"
+                          id="year"
                           placeholder="YY"
                           maxLength={2}
                           className={`form-control w-full ${
