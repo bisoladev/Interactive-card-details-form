@@ -10,7 +10,7 @@ body {
 @tailwind utilities;
 @layer components {
   .form-control {
-    @apply mb-[8px] mt-2 rounded-lg border  border-grey pb-3 pl-4 pr-4 pt-4;
+    @apply focus:gradient mb-[8px] mt-2 rounded-lg  border border-grey pb-3 pl-4 pr-4 pt-4 focus:outline-none;
   }
   .form-control::placeholder {
     @apply text-base text-deepGrey md:text-lg;
@@ -22,5 +22,16 @@ body {
 
   .error-msg {
     @apply mb-[18px] whitespace-normal pt-0 text-xs capitalize tracking-normal text-red-500;
+  }
+}
+
+@layer utilities {
+  .gradient {
+    border: solid 1px transparent;
+    border-radius: 8px;
+    background-image: linear-gradient(white, white),
+      linear-gradient(to right, #6348fe, #610595);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
   }
 }
