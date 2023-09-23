@@ -76,7 +76,7 @@ function App() {
       </div>
       <div className="flex w-full justify-center align-middle">
         {confirmed ? (
-          <div className="flex flex-col justify-center pt-24 text-center align-middle md:pt-0">
+          <div className="flex flex-col justify-center pt-24 text-center align-middle transition-all md:pt-0">
             <div className="mx-auto">
               <img src="/tick.svg" alt="circular tick" />
             </div>
@@ -88,7 +88,7 @@ function App() {
             <div>
               <button
                 type="button"
-                className="w-72 rounded-lg bg-violet py-2 text-lg text-white lg:w-96"
+                className="w-72 rounded-lg bg-violet py-2 text-lg text-white transition-all hover:bg-[#2F0D3F] lg:w-96"
                 onClick={() => setConfirmed(false)}
               >
                 Confirm
@@ -250,7 +250,7 @@ function App() {
               <div>
                 <button
                   type="submit"
-                  className="w-full rounded-lg bg-violet py-3 text-lg text-white"
+                  className="w-full rounded-lg bg-violet py-3 text-lg text-white transition-all hover:bg-[#2F0D3F]"
                 >
                   Confirm
                 </button>
