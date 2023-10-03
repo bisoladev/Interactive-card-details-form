@@ -51,7 +51,6 @@ function App() {
   };
 
   return (
-    // <div className="">
     <div className="relative flex h-screen flex-col md:flex-row">
       <img
         src="/hero-bg.png"
@@ -147,7 +146,6 @@ function App() {
                         value: 19,
                         message: 'Incomplete digits.',
                       },
-                      // valueAsNumber: true,
                       onChange: handleCardNumberChange,
                     })}
                   />
@@ -171,7 +169,6 @@ function App() {
                           }`}
                           maxLength={2}
                           {...register('expiryMonth', {
-                            // valueAsNumber: true,
                             required: 'Cant be blank.',
                             pattern: {
                               value: /^(0[1-9]|1[0-2])$/,
@@ -198,7 +195,6 @@ function App() {
                             errors.expiryYear ? 'border-red-500' : ''
                           }`}
                           {...register('expiryYear', {
-                            // valueAsNumber: true,
                             required: 'Cant be blank.',
                             pattern: {
                               value: /^(1[0-9]|30)$/,
@@ -230,7 +226,6 @@ function App() {
                         errors.cvc ? 'border-red-500' : ''
                       }`}
                       {...register('cvc', {
-                        // valueAsNumber: true,
                         required: 'Cant be blank.',
                         minLength: {
                           value: 3,
@@ -260,7 +255,6 @@ function App() {
         )}
       </div>
     </div>
-    // </div>
   );
 }
 
